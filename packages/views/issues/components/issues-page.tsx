@@ -59,6 +59,12 @@ function IssuesSurfaceHeader({
       />
       {statusFacet && (
         <div className="flex flex-wrap items-center gap-x-5 gap-y-1 px-4 pb-2 text-caption text-muted-foreground md:px-6">
+          <span>
+            {t(($) => $.status_category.total)}{" "}
+            <span className="font-medium text-foreground">
+              {statusFacet.values.reduce((total, value) => total + value.count, 0)}
+            </span>
+          </span>
           {STATUS_ORDER.map((category) => {
             const count = statusFacet.values.reduce((total, value) => (
               statusCatalog.categoryOf(value.key) === category ? total + value.count : total
@@ -69,6 +75,14 @@ function IssuesSurfaceHeader({
               </span>
             );
           })}
+          <span>
+            {t(($) => $.status_category.cancelled)}{" "}
+            <span className="font-medium text-foreground">
+              {statusFacet.values.reduce((total, value) => (
+                value.key === "cancelled" ? total + value.count : total
+              ), 0)}
+            </span>
+          </span>
         </div>
       )}
     </>
